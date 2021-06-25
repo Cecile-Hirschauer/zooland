@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Animal, Enclosure, Species
+from .models import Animal, Enclosure, Species, FavAnimal
 
 
 @admin.register(Animal)
@@ -9,3 +9,4 @@ class AnimalAdmin(admin.ModelAdmin):
 
 admin.site.register(Enclosure)
 admin.site.register(Species)
+admin.site.register(FavAnimal)

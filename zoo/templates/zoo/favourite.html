@@ -1,12 +1,5 @@
 {% extends 'zoo/base.html' %}
 {% block content %}
-
-<form class="form-inline" id="filter-animals">
-    {% csrf_token %}
-    {{ form_gender }}
-    {{ form_species }}
-    <input type="submit" value="Filter">
-</form>
     
 <div class="row clear-both">
 {% for animal in animals %}
@@ -16,7 +9,7 @@
             <div class="card-body">
                 <h5 class="card-title">{{ animal.name }} <em>({{ animal.species.name }})</em></h5>
                 <a href="{% url 'animal' animal.id %}" class="btn btn-primary">Full profile</a>
-            </div>
+            </div>        
         </div>
     </div>
 {% endfor %}

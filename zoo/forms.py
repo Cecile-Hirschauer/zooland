@@ -1,11 +1,21 @@
 from django import forms
-from .models import Animal, MedicalReport
+from .models import Animal, MedicalReport, Species, FavAnimal
 
 
-class FilterAnimalsForm(forms.Form):
+class FilterAnimalsGenderForm(forms.Form):
     CHOICES = [('None', '--------')] + Animal.Gender.choices
     gender  = forms.ChoiceField(
         label="Filter by gender", 
+        choices=CHOICES, 
+        required=False, 
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+
+
+class FilterAnimalsSpeciesForm(forms.Form):
+    CHOICES = [('None', '--------')] + Species.DietType.choices
+    dietType  = forms.ChoiceField(
+        label="Filter by species", 
         choices=CHOICES, 
         required=False, 
         widget=forms.Select(attrs={'class': 'form-control'})
@@ -20,7 +30,7 @@ class MoveEnclosureForm(forms.ModelForm):
             'enclosure': forms.Select(attrs={'class': 'form-control'}),
         }
         labels  = {
-            'enclosure': ''
+            'enclosure': 'Enclosures'
         }
 
 
@@ -32,3 +42,14 @@ class AddMedicalReportForm(forms.ModelForm):
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'content': forms.Textarea(attrs={'class': 'form-control'}),
         }
+
+class FavAnimalForm(forms.Form):
+    class Meta:
+        model   = Animal
+        fields = ['name']
+        # widgets = {'name': forms.HiddenInput()}
+        
+class RemoveFavAnimalForm(forms.Form):
+    class Meta:
+        model   = FavAnimal
+        fields = ['id']

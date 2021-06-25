@@ -1,17 +1,23 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-
+from django.db.models import UniqueConstraint
 
 class Enclosure(models.Model):
+        
     capacity = models.IntegerField(default=0)
+    name = models.CharField(max_length=100)
 
     def animals_count(self):
         return self.animal_set.count()
+    
+    def spots_left(self):
+        # Calculate how many spot left
+        return self.capacity - self.animals_count()
 
     def __str__(self):
-        return f"{self.capacity}-animal enclosure ({self.animals_count()} occupants)"
-
+        return f"Enclosure n° {self.id} - capacity: {self.capacity} (spots-left: {self.spots_left()})"    
+    
 
 class Species(models.Model):
 
@@ -67,3 +73,14 @@ class MedicalReport(models.Model):
     def __str__(self):
         return f"Medical Report for {self.animal} by {self.author}"
 
+
+class FavAnimal(models.Model):
+    reg_user = models.ForeignKey(User, on_delete=models.CASCADE)
+    fav_animal = models.OneToOneField(Animal, on_delete=models.CASCADE)
+   
+    class Meta:
+        constraints = [
+            UniqueConstraint(fields=['reg_user','fav_animal'], name='unique_fav')
+        ]
+    def __str__(self):
+        return self.fav_animal.name

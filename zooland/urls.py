@@ -17,8 +17,11 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from userauth import views
+
 
 urlpatterns = [
+    path("password_reset", views.password_reset_request, name="password_reset"),
     path('', include('zoo.urls')),
     path('', include('userauth.urls')),
     path('admin/', admin.site.urls),

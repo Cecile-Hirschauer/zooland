@@ -8,7 +8,7 @@
         <tbody>
             <tr class="d-flex">
                 <td class="col-3">Enclosure</th>
-                <td class="col-9">#{{ enclosure.id }}</td>
+                <td class="col-9">Enclosure #{{ enclosure.id }}</td>
             </tr>
             <tr class="d-flex">
                 <td class="col-3">Capacity</th>
@@ -19,7 +19,12 @@
 </section>
 <section>
     <h2>Enclosure occupants</h2>
-    <p>There are currently {{ occupants|length }} animals in the enclosure.</p>
+    {% if occupants|length > 1 %}
+        <p>There are currently {{ occupants|length }} animals in the enclosure.</p>
+    {% else %}
+        <p>There are currently {{ occupants|length }} animal in the enclosure.</p>
+    {% endif %}
+
     <div class="row mt-4">
         {% for animal in occupants %}
         <div class="col-6 col-md-4 col-lg-3 col-xl-2">

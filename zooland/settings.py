@@ -132,4 +132,6 @@ LOGIN_URL = 'login'
 MEDIA_ROOT = 'zoo/'
 MEDIA_URL = '/images/'
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
