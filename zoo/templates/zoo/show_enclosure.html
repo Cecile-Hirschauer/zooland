@@ -1,0 +1,38 @@
+{% extends 'zoo/base.html' %}
+{% load static %}
+{% block content %}
+
+<section>
+    <h2>Enclosure information</h2>
+    <table class="table info">
+        <tbody>
+            <tr class="d-flex">
+                <td class="col-3">Enclosure</th>
+                <td class="col-9">#{{ enclosure.id }}</td>
+            </tr>
+            <tr class="d-flex">
+                <td class="col-3">Capacity</th>
+                <td class="col-9">{{ enclosure.capacity }} animals</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+<section>
+    <h2>Enclosure occupants</h2>
+    <p>There are currently {{ occupants|length }} animals in the enclosure.</p>
+    <div class="row mt-4">
+        {% for animal in occupants %}
+        <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+            <div class="card mb-4">
+                <img class="card-img-top" src="{{ animal.image.url }}" alt="Animal profile picture">
+                <div class="card-body">
+                    <h5 class="card-title">{{ animal.name }} <em>({{ animal.species.name }})</em></h5>
+                    <a href="{% url 'animal' animal.id %}" class="btn btn-primary">Full profile</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+{% endblock content %}

@@ -1,0 +1,15 @@
+{% extends 'zoo/base.html' %}
+
+{% block content %}
+    
+{% if request.user.is_authenticated %}
+<p>You are already logged in.</p>
+{% else %}
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Register</button>
+</form>
+{% endif %}
+
+{% endblock content %}

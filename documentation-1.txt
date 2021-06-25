@@ -1,0 +1,18 @@
+USERAUTH : ETAT DES LIEUX
+un seul type d'utilisateurs existe : il a accès à la page d'accueil, page index, page animals ; il peut consulter :
+	pages index/enclosures --> liste d'animaux dans l'enclos --> détails sur l'animal choisi
+	animals --> liste de tous les animaux --> détails sur l'animal choisi
+			
+	page login
+		s'inscrire
+		se connecter (accès identique au non-inscrit/non-connecté, sauf avec bouton 'logout')
+
+USERAUTH : PREMIÈRES MODIFICATIONS À APPORTER
+création d'un superuser (admin), qui peut
+	créer les groupes d'utilisateurs, eg 'Soigneur', 'Vétérinaire', et assigner l'utilisateur au groupe
+création d'autres types d'utilisateurs, ie créer des rôles/groupes 'Caregiver', 'Veterinary'
+	Caregiver
+		gérer les animaux , eg les déplacer d'un enclos à l'autre
+		consulter leurs dossiers médicaux
+	Veterinary
+		ajout des dossiers médicaux

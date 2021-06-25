@@ -1,0 +1,75 @@
+{% extends 'zoo/base.html' %}
+{% block content %}
+
+<section>
+    <h2>Animal information</h2>
+    <img class="" src="{{ animal.image.url }}" alt="Animal profile picture">
+    <table class="table info mt-4">
+        <tbody>
+            <tr class="d-flex">
+                <td class="col-3">Name</th>
+                <td class="col-9">{{ animal.name }}</td>
+            </tr>
+            <tr class="d-flex">
+                <td class="col-3">Species</th>
+                <td class="col-9">{{ animal.species.name }}</td>
+            </tr>
+            <tr class="d-flex">
+                <td class="col-3">Gender</th>
+                <td class="col-9">{{ animal.gender }}</td>
+            </tr>
+            <tr class="d-flex">
+                <td class="col-3">Age</th>
+                <td class="col-9">{{ animal.age }}</td>
+            </tr>
+            <tr class="d-flex">
+                <td class="col-3">Enclosure</th>
+                <td class="col-9">{% if animal.enclosure %} #{{ animal.enclosure.id }} {% else %} <em>Not in a public enclosure</em> {% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+{% if perms.zoo.change_animal %}
+<section>
+    <h4>Move {{ animal.name }} to a new enclosure:</h4>
+    <form action="{% url 'move_animal' animal.id %}" method="post">
+        {% csrf_token %}
+        {{ move_form }}
+        <button type="submit" class="btn btn-primary">Move</button>
+    </form>
+</section>
+{% endif %}
+
+{% if request.user.is_staff %}
+{% load humanize %}
+<section>
+    <h2>Medical Reports</h2>
+    {% if not reports %}
+        <p>No medical reports yet.</p>
+    {% endif %}
+    {% for report in reports %}
+    <div class="card">
+        <div class="card-header">{{ report.title }}</div>
+        <div class="card-body">
+            <blockquote class="blockquote mb-0">
+                <p>{{ report.content }}</p>
+                <footer class="blockquote-footer">{{ report.author }} ({{ report.created_at|naturaltime }})</footer>
+            </blockquote>
+        </div>
+    </div>
+    {% endfor %}
+</section>
+{% if perms.zoo.add_medicalreport %}
+<section>
+    <h3>Add a medical report:</h3>
+    <form action="{% url 'add_medical_report' animal.id %}" method="post">
+        {% csrf_token %}
+        {{ medical_form }}
+        <button type="submit" class="btn btn-primary">Add medical report</button>
+    </form>
+    {% endif %}
+</section>
+{% endif %}
+
+{% endblock content %}

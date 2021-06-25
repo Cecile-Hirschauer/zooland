@@ -1,0 +1,79 @@
+/***** Layout  *****/
+
+html,body {
+    height: 100%;
+}
+
+img.card-img-top {
+    object-fit: cover;
+    width: 100%;
+    height: 150px;
+}
+
+button.btn {
+    margin-top: 15px;
+}
+
+.alert ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    box-shadow: 0px 10px 25px 0px rgba(28,45,113,0.17);
+    border-radius: 12px;
+    margin-bottom: 50px;
+    padding: 30px;
+    min-height: 50%;
+}
+
+.container section {
+    margin-bottom: 40px;
+}
+
+.container section h2:after {
+    display: block;
+    height: 1px;
+    border-bottom: 1px solid black;
+    content: '';
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+}
+
+.clear-both {
+    clear: both;
+}
+
+
+/***** Enclosure Index page *****/
+
+.enclosure-thumbnail {
+    background: #26b5d9;
+    color: white;
+    padding: 50px 0px;
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+    border-radius: 12px;
+}
+
+
+/***** Animals Index page *****/
+
+#filter-animals {
+    float: right;
+    margin-bottom: 40px;
+}
+
+#filter-animals > * {
+    margin: 0px 5px;
+}
+
+
+/***** Details page *****/
+
+.table.info td:first-of-type {
+    background: #f8f9fa;
+    text-align: right;
+}
