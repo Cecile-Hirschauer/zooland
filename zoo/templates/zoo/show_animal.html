@@ -52,7 +52,7 @@
             <!-- Security token by Django -->
             {% csrf_token %}
             <h4>Remove {{ animal.name }} from favorites</h4>
-            <input type="submit" value="Remove" />
+            <input type="submit" class="btn btn-danger" value="Remove" />
         </form>
     </div>
     {% endif %}
