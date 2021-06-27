@@ -246,9 +246,7 @@ class TestAddViewFav(TestCase): # add animal to Favourite and view Favourite pag
         self.client.post('/login/', self.credentials, follow=True)
         self.fav_animal = FavAnimal.objects.create(reg_user=self.user, fav_animal=self.animal)
         self.fav_animal.save()
-        c = {'reg_user': self.user.id, 'fav_animal': id}
-        response = self.client.post(reverse('add_fav', kwargs={'id': self.animal.id}), c)
-
+        
         with self.assertRaises(IntegrityError) as context:
             FavAnimal.objects.create(reg_user=self.user, fav_animal=self.animal)
         self.assertTrue('UNIQUE constraint failed' in str(context.exception))

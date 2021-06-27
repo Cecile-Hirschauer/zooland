@@ -1,12 +1,16 @@
 {% extends 'zoo/base.html' %}
 {% block content %}
-
+<h3>Enclosures</h3>
 <div class="row">
-    <h3>Test de texte</h3>
+    
 {% for enclosure in enclosures %}
     <div class="col-6 col-md-4">
         <a href="{% url 'enclosure' enclosure.id %}" class="enclosure-thumbnail">
+            {% if enclosure.name %}
+            <h2>{{enclosure.name}}</h2>
+            {% else %}
             <h2>Enclosure #{{enclosure.id}}</h2>
+            {% endif %}
         </a>
     </div>
 {% endfor %}  

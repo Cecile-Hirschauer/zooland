@@ -51,7 +51,8 @@ button.btn {
 .enclosure-thumbnail {
     background: #26b5d9;
     color: white;
-    padding: 50px 0px;
+    padding: 50px 10px;
+    margin-bottom: 20px;
     display: inline-block;
     text-align: center;
     width: 100%;

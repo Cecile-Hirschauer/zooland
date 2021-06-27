@@ -10,6 +10,7 @@ from django.utils.http import urlsafe_base64_encode
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_bytes
 from django.contrib import messages
+from .forms import CustomUserCreationForm
 
 def log_in(request):
     if (request.method == 'POST'):
@@ -32,20 +33,17 @@ def log_out(request):
 
 
 def register(request):
-    if (request.method == "POST"):
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            user = authenticate(
-                username=request.POST['username'], 
-                password=request.POST['password1']
-            )
-            login(request, user)
-            return redirect('index')
-    else:
-        form = UserCreationForm()
+    if request.method == 'POST':
+        f = CustomUserCreationForm(request.POST)
+        if f.is_valid():
+            f.save()
+            messages.success(request, 'Account created successfully')
+            return redirect('login')
 
-    return render(request, 'userauth/register.html', { 'form': form })
+    else:
+        f = CustomUserCreationForm()
+
+    return render(request, 'userauth/register.html', {'form': f})
 
 
 def password_reset_request(request):
@@ -77,53 +75,3 @@ def password_reset_request(request):
             messages.error(request, 'An invalid email has been entered.')
     password_reset_form = PasswordResetForm()
     return render(request=request, template_name="userauth/password_reset.html", context={"password_reset_form":password_reset_form})
-
-
-# def lost_password(request):
-#     if (request.method == "POST"):
-#         form = SetPasswordForm(user=request.user)
-#         print(request.user)
-#         if form.is_valid():
-#             print('VALID')
-#             # form.save()
-#             # user = authenticate(
-#             #     password1=request.POST['password1'], 
-#             #     password2=request.POST['password2']
-#             # )
-#             # login(request, user)
-#             return redirect('index')
-#     else:
-#         form = SetPasswordForm(user=request.user)
-
-#     return render(request, 'userauth/lost_password.html', { 'form': form })
-
-
-# def password_reset(request):
-#     if (request.method == "POST"):
-#         form = SetPasswordForm(user=request.user)
-#         print(request.user)
-#         if form.is_valid():
-#             print('VALID')
-#             # form.save()
-#             # user = authenticate(
-#             #     password1=request.POST['password1'], 
-#             #     password2=request.POST['password2']
-#             # )
-#             # login(request, user)
-#             return redirect('index')
-#     else:
-#         form = SetPasswordForm(user=request.user)
-
-#     return render(request, 'userauth/password_reset.html', { 'form': form })
-
-# # def password_change(request, username):
-# #     if request.method == 'POST':
-# #         form = PasswordChangeForm(data=request.POST, user=request.user)
-# #         if form.is_valid():
-# #             update_session_auth_hash(request, form.username)
-# #             form.save()
-# #             return HttpResponseRedirect('/blog/password_change_done/') 
-# #         else:
-# #             return render(request, 'blog/profile.html', {'form': form })
-# #     else:
-# #         return redirect(reverse('blog:profile', args=[username]))

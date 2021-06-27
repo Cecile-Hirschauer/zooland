@@ -6,7 +6,7 @@ from django.db.models import UniqueConstraint
 class Enclosure(models.Model):
         
     capacity = models.IntegerField(default=0)
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, blank=True, null=True)
 
     def animals_count(self):
         return self.animal_set.count()
@@ -16,7 +16,10 @@ class Enclosure(models.Model):
         return self.capacity - self.animals_count()
 
     def __str__(self):
-        return f"Enclosure n° {self.id} - capacity: {self.capacity} (spots-left: {self.spots_left()})"    
+        if self.name:
+            return f"{self.name} - spots-left: {self.spots_left()}"
+        else:
+            return f"Enclosure n° {self.id} - spots-left: {self.spots_left()}"    
     
 
 class Species(models.Model):
@@ -44,7 +47,7 @@ class Animal(models.Model):
     enclosure     = models.ForeignKey(Enclosure, on_delete=models.SET_NULL, null=True)
     date_of_birth = models.DateField(null=True)
     gender        = models.CharField(max_length=6, choices=Gender.choices)
-    image         = models.ImageField(upload_to='images/')
+    image         = models.ImageField(upload_to='images/', null=True, blank=True)
 
     def __str__(self):
         return f"{self.name} {'F' if self.gender == 'Female' else 'M'} (Species: {self.species})"
@@ -80,7 +83,7 @@ class FavAnimal(models.Model):
    
     class Meta:
         constraints = [
-            UniqueConstraint(fields=['reg_user','fav_animal'], name='unique_fav')
+            UniqueConstraint(fields=['reg_user','fav_animal'], name='favorite_animal')
         ]
     def __str__(self):
         return self.fav_animal.name

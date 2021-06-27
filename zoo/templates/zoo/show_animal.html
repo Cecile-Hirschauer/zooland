@@ -24,7 +24,14 @@
             </tr>
             <tr class="d-flex">
                 <td class="col-3">Enclosure</th>
-                <td class="col-9">{% if animal.enclosure %} Enclosure #{{ animal.enclosure.id }} {% else %} <em>Not in a public enclosure</em> {% endif %}</td>
+                <td class="col-9">
+                    {% if animal.enclosure %} 
+                        {% if animal.enclosure.name %}
+                        {{ animal.enclosure.name }}
+                        {% else %}
+                        Enclosure #{{ animal.enclosure.id}}
+                        {% endif %} 
+                    {% else %} <em>Not in a public enclosure</em> {% endif %}</td>
             </tr>
         </tbody>
     </table>

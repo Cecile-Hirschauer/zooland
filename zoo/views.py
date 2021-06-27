@@ -19,16 +19,16 @@ def animals(request): # Afficher les animaux selon filtre(s) appliqué(s)
     dietType = request.GET.get('dietType')
 
     # Si deux filtres, ie sexe et régime alimentaire
-    if gender is not None and gender in Animal.Gender and dietType is not None and dietType in Species.DietType:
-        some_list = Animal.objects.filter(species__diet_type=dietType)
-        animals = some_list.filter(gender=gender)
+    if gender and gender in Animal.Gender and dietType and dietType in Species.DietType:
+        animals = Animal.objects.filter(gender=gender, species__diet_type=dietType)
+        
 
     # Si filtre sexe
-    elif gender is not None and gender in Animal.Gender:
+    elif gender and gender in Animal.Gender:
         animals = Animal.objects.filter(gender=gender)
 
     # Si filtre régime alimentaire
-    elif dietType is not None and dietType in Species.DietType:
+    elif dietType and dietType in Species.DietType:
         diet_type_list = []
         for animal in animals_all:
             if animal.species.diet_type == dietType:
