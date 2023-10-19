@@ -8,4 +8,4 @@ apturl==0.5.2
 asgiref==3.3.4
 coverage==5.5
 selenium==3.141.0
-urllib3==1.26.6
+urllib3==1.26.18
